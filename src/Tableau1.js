@@ -13,8 +13,10 @@ class Tableau1 extends Phaser.Scene{
         this.hauteur=800
         this.largeur=800
 
+        this.scores = 0
         this.vie = 3
-        this.score = 0
+
+
 
         this.murgauche = this.physics.add.image(0,0, "carre").setOrigin(0,0)
         this.murgauche.setDisplaySize(20,this.hauteur)
@@ -56,7 +58,7 @@ class Tableau1 extends Phaser.Scene{
             for (let j=1;j<=5;j++)
             {
 
-                this.brique = new Briques(120+i*61,100+j*31,"0x808080","brique"+i+j)
+                this.brique = new Briques(120+i*61,100+j*31,"brique"+i+j)
                 let b = this.physics.add.image(this.brique.posX,this.brique.posY,"carre").setOrigin(0,0)
                 b.setDisplaySize(60,30)
                 b.body.setAllowGravity(false)
@@ -64,14 +66,15 @@ class Tableau1 extends Phaser.Scene{
 
                 if (i === 3 && j === 4)
                 {
-                    this.brique.color = "0x02ff00"
+                    b.setTintFill(0x02ff00)
+                    b.isVerte=true;
                 }
                 if (i === 4 && j === 4)
                 {
-                    this.brique.color = "0xff0000"
+                    b.setTintFill(0xff0000)
+                    b.isRouge=true;
                 }
 
-                b.setTintFill(this.brique.color);
                 this.physics.add.collider(this.balle,b,function(){
                     me.percutation(b)
                 });
@@ -129,6 +132,11 @@ class Tableau1 extends Phaser.Scene{
 
     sortie()
     {
+        if (this.vie === 0)
+        {
+            alert("perdu")
+            location.reload()
+        }
         this.balle.x = this.largeur/2
         this.balle.y = this.hauteur/2+200
         this.balle.setVelocityX(100)
@@ -138,9 +146,17 @@ class Tableau1 extends Phaser.Scene{
 
     percutation(brique)
     {
-        console.log(brique)
+        if (brique.isVerte === true)
+        {
+            this.vie+=1
+        }
+        if (brique.isRouge === true)
+        {
+            this.score+=9
+        }
+
         brique.destroy()
-        this.score+=1
+        this.scores+=1
     }
 
 
@@ -161,5 +177,18 @@ class Tableau1 extends Phaser.Scene{
         {
             this.sortie()
         }
+
+        if (this.score === 54)
+        {
+            alert("Gagné!")
+            location.reload()
+        }
+
+        //affichage des points
+        this.$el = document.getElementById("vie");
+        this.$vie = document.getElementById("vie")
+        this.$vie.textContent = this.vie
+        this.$scores = document.getElementById("scores")
+        this.$scores.textContent = this.scores
     }
 }

@@ -10,22 +10,16 @@ class Briques
         return this.posY;
     }
 
-    getColor()
-    {
-        return this.color;
-    }
-
     getName()
     {
         return this.name;
     }
 
 
-    constructor(x,y,color,name)
+    constructor(x,y,name)
     {
         this.posX = x;
         this.posY = y;
-        this.color = color;
         this.name = name;
     }
 }
