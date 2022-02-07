@@ -16,7 +16,7 @@ class Tableau1 extends Phaser.Scene{
         this.scores = 0
         this.vie = 3
 
-
+        this.cassage = 0
 
         this.murgauche = this.physics.add.image(0,0, "carre").setOrigin(0,0)
         this.murgauche.setDisplaySize(20,this.hauteur)
@@ -157,6 +157,8 @@ class Tableau1 extends Phaser.Scene{
 
         brique.destroy()
         this.scores+=1
+
+        this.cassage+=1
     }
 
 
@@ -178,7 +180,7 @@ class Tableau1 extends Phaser.Scene{
             this.sortie()
         }
 
-        if (this.score === 54)
+        if (this.cassage === 45)
         {
             alert("Gagné!")
             location.reload()
